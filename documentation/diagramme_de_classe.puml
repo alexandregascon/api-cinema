@@ -23,7 +23,7 @@ class Film {
 class User {
 - id
 - username/email
-- dateReserv
+- mdp
 - roles
 }
 
