@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Salle {
+- id
+- nom
+- nbPlaces
+}
+
+class Séance {
+- id
+- dateProj
+- tarifNormal
+- tarifRéduit
+}
+
+class Film {
+- id
+- titre
+- durée
+}
+
+class User {
+- id
+- username/email
+- dateReserv
+- roles
+}
+
+class Réservation {
+- id
+- nbPlaces
+- dateReserv
+- Montant
+}
+
+User "1..1"--"1..*" Réservation
+Salle "1..*"--"1..1  " Séance
+Réservation "0..*"--"1..1" Séance
+Séance "1..*"--"1..1" Film
+
+@enduml
