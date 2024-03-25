@@ -19,6 +19,10 @@ class Film
     #[ORM\Column]
     private ?int $duree = null;
 
+    public function __construct()
+    {
+    }
+
     public function getId(): ?int
     {
         return $this->id;
