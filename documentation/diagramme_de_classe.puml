@@ -34,9 +34,9 @@ class Réservation {
 - Montant
 }
 
-User "1..1"--"1..*" Réservation
-Salle "1..*"--"1..1  " Séance
-Réservation "0..*"--"1..1" Séance
-Séance "1..*"--"1..1" Film
+User "1..1"-->"1..*" Réservation
+Salle "1..1"-->"1..*  " Séance
+Réservation "0..*"<--"1..1" Séance
+Séance "1..*"<--"1..1" Film
 
 @enduml

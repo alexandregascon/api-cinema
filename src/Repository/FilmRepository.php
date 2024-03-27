@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Film;
+use App\Entity\Seance;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,20 +22,34 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
-//    /**
-//     * @return Film[] Returns an array of Film objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Film[] Returns an array of Film objects
+     */
+        public function findFilmAffiche(): array
+    {
+        $date = new \DateTime();
+        $date = $date->format("Y-m-d");
+        return $this->createQueryBuilder("f")
+            ->select("f")
+            ->from("App:Seance","s")
+            ->where("f.id = s.film")
+            ->andWhere("s.dateProj >= :date")
+            ->setParameter("date",$date)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findDetailFilm(int $id): array
+    {
+        return $this->createQueryBuilder("f")
+            ->select("f")
+            ->where("f.id = :id")
+            ->setParameter("id",$id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 //    public function findOneBySomeField($value): ?Film
 //    {

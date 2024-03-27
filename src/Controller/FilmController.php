@@ -8,23 +8,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
+#[Route('/api')]
 class FilmController extends AbstractController
 {
     #[Route('/film', name: 'app_film')]
     public function index(FilmRepository $filmRepository, SerializerInterface $serializer): Response
     {
-        // Rechercher tous les Posts dans la base de données
-        $films = $filmRepository->findBy();
+        // Rechercher tous les Films dans la base de données
+        $films = $filmRepository->findFilmAffiche();
 
-        // Serialiser le tableau de Posts en Json
-        $postsJson = $serializer->serialize($films,"json");
+        // Serialiser le tableau de Films en Json
+        $filmsJson = $serializer->serialize($films,"json",['groups'=>'affiche_films']);
         // Construire la réponse HTTP
-//        $reponse = new Response();
-//        $reponse->setStatusCode(Response::HTTP_OK);
-//        $reponse->headers->set("content-type","application/json");
-//        $reponse->setContent($postsJson);
-//        return $reponse;
         // VERSION CONDENCE
-        return new Response($postsJson,Response::HTTP_OK,["content-type"=>"application/json"]);
+        return new Response($filmsJson,Response::HTTP_OK,["content-type"=>"application/json"]);
+    }
+
+    #[Route('/film/{id}', name: 'app_detail_film')]
+    public function detail(FilmRepository $filmRepository, SerializerInterface $serializer, int $id): Response
+    {
+        // Rechercher tous les Films dans la base de données
+        $films = $filmRepository->findDetailFilm($id);
+
+        // Serialiser le tableau de Films en Json
+        $filmsJson = $serializer->serialize($films,"json");
+        // Construire la réponse HTTP
+        // VERSION CONDENCE
+        return new Response($filmsJson,Response::HTTP_OK,["content-type"=>"application/json"]);
     }
 }

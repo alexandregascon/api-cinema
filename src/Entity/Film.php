@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FilmRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FilmRepository::class)]
 class Film
@@ -11,12 +12,15 @@ class Film
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['affiche_films'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['affiche_films'])]
     private ?string $titre = null;
 
     #[ORM\Column]
+    #[Groups(['affiche_films'])]
     private ?int $duree = null;
 
     public function __construct()

@@ -23,6 +23,9 @@ class Reservation
     #[ORM\Column]
     private ?int $montant = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private ?User $user;
+
     public function getId(): ?int
     {
         return $this->id;

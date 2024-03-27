@@ -14,14 +14,24 @@ class Seance
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateProj = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTime $dateProj = null;
 
     #[ORM\Column]
     private ?int $tarifNormal = null;
 
     #[ORM\Column]
     private ?int $tarifReduit = null;
+
+    #[ORM\ManyToOne(targetEntity: Salle::class)]
+    private ?Salle $salle;
+
+    #[ORM\ManyToOne(targetEntity: Film::class)]
+    private ?Film $film;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -62,5 +72,37 @@ class Seance
         $this->tarifReduit = $tarifReduit;
 
         return $this;
+    }
+
+    /**
+     * @return Salle|null
+     */
+    public function getSalle(): ?Salle
+    {
+        return $this->salle;
+    }
+
+    /**
+     * @param Salle|null $salle
+     */
+    public function setSalle(?Salle $salle): void
+    {
+        $this->salle = $salle;
+    }
+
+    /**
+     * @return Film|null
+     */
+    public function getFilm(): ?Film
+    {
+        return $this->film;
+    }
+
+    /**
+     * @param Film|null $film
+     */
+    public function setFilm(?Film $film): void
+    {
+        $this->film = $film;
     }
 }
