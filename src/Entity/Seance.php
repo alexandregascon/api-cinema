@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SeanceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SeanceRepository::class)]
 class Seance
@@ -12,22 +13,29 @@ class Seance
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['detail_films'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['detail_films'])]
     private ?\DateTime $dateProj = null;
 
     #[ORM\Column]
+    #[Groups(['detail_films'])]
     private ?int $tarifNormal = null;
 
     #[ORM\Column]
+    #[Groups(['detail_films'])]
     private ?int $tarifReduit = null;
 
-    #[ORM\ManyToOne(targetEntity: Salle::class)]
-    private ?Salle $salle;
+    #[ORM\ManyToOne(inversedBy: 'seances')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Film $film = null;
 
-    #[ORM\ManyToOne(targetEntity: Film::class)]
-    private ?Film $film;
+    #[ORM\ManyToOne(inversedBy: 'seances')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['detail_films'])]
+    private ?Salle $salle = null;
 
     public function __construct()
     {

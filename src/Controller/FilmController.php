@@ -31,7 +31,7 @@ class FilmController extends AbstractController
         $films = $filmRepository->findDetailFilm($id);
 
         // Serialiser le tableau de Films en Json
-        $filmsJson = $serializer->serialize($films,"json");
+        $filmsJson = $serializer->serialize($films,"json",['groups'=>'detail_films']);
         // Construire la réponse HTTP
         // VERSION CONDENCE
         return new Response($filmsJson,Response::HTTP_OK,["content-type"=>"application/json"]);

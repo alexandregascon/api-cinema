@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -12,19 +14,24 @@ class Film
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['affiche_films'])]
+    #[Groups(['affiche_films','detail_films'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['affiche_films'])]
+    #[Groups(['affiche_films','detail_films'])]
     private ?string $titre = null;
 
     #[ORM\Column]
-    #[Groups(['affiche_films'])]
+    #[Groups(['affiche_films','detail_films'])]
     private ?int $duree = null;
+
+    #[ORM\OneToMany(mappedBy: 'film', targetEntity: Seance::class)]
+    #[Groups(['detail_films'])]
+    private Collection $seances;
 
     public function __construct()
     {
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,6 +59,36 @@ class Film
     public function setDuree(int $duree): static
     {
         $this->duree = $duree;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Seance>
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): static
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances->add($seance);
+            $seance->setFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): static
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getFilm() === $this) {
+                $seance->setFilm(null);
+            }
+        }
 
         return $this;
     }
