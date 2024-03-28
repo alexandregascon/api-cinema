@@ -44,11 +44,11 @@ class FilmRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder("f")
             ->select("f")
-            ->from("App:Seance","s")
-            ->where("f.id = s.film")
-            ->andWhere("s.dateProj >= :date")
+            ->leftJoin('f.seances', 's')
+            ->addSelect("s")
             ->where("f.id = :id")
             ->setParameter(":id",$id)
+            ->orderBy("s.dateProj","ASC")
             ->getQuery()
             ->getResult()
             ;

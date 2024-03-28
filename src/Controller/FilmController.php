@@ -29,6 +29,8 @@ class FilmController extends AbstractController
     {
         // Rechercher tous les Films dans la base de données
         $films = $filmRepository->findDetailFilm($id);
+//        $films = $filmRepository->findOneBy(['id'=>$id]);
+//        dd($films);
 
         // Serialiser le tableau de Films en Json
         $filmsJson = $serializer->serialize($films,"json",['groups'=>'detail_films']);
