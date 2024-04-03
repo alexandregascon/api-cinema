@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2718cc19-b78c-413e-bfb9-d92019938e7d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FilmController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FilmController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/FilmRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FilmRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="detail-film" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -217,6 +216,8 @@
       <workItem from="1711444123822" duration="11928000" />
       <workItem from="1711522965280" duration="1755000" />
       <workItem from="1711617956572" duration="2724000" />
+      <workItem from="1712045369466" duration="10795000" />
+      <workItem from="1712124109899" duration="3909000" />
     </task>
     <servers />
   </component>
