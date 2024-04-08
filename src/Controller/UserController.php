@@ -95,21 +95,24 @@ class UserController extends AbstractController
         $user->setRoles(UserRoles::ROLE_USER);
 
         if($emailDejaUtilise){
-            return new Response("Email déjà utilisé",Response::HTTP_BAD_REQUEST);
+            $erreur = $serializer->serialize(["code"=>"400","message"=>"Email déjà utilisé"],'json');
+            return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
 
         if(!$valideEmail){
-            return new Response("Email non valide",Response::HTTP_BAD_REQUEST);
+            $erreur = $serializer->serialize(["code"=>"400","message"=>"Email non valide"],'json');
+            return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
 
         if(!$valideLettreMin or !$valideCaractere or !$valideChiffre or !$valideLettreMaj) {
-            return new Response("Complexité du mot de passe trop faible",Response::HTTP_BAD_REQUEST);
+            $erreur = $serializer->serialize(["code"=>"400","message"=>"Complexité du mot de passe trop faible. 1 lettre minuscule, 1 lettre majuscule, 1 chiffre, et 1 caractère spéciale nécessaire au minimum"],'json');
+            return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
 
         $entityManager->persist($user);
         $entityManager->flush();
         // Générer la réponse
-        $position = $serializer->serialize($user,'json',['groups'=>'create_user']);
+        $position = $serializer->serialize([$user,"code"=>201],'json',['groups'=>'create_user']);
         return new Response($position,Response::HTTP_CREATED,["content-type" => "application/json"]);
     }
 }
