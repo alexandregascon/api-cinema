@@ -58,12 +58,19 @@ class UserController extends AbstractController
         $valideCaractere = false;
         $valideChiffre = false;
 
+        $debug = [];
+
         for($i = 0; $i <=25;$i++){
             if(strpos($user->getMdp(),substr($alphabetMin,$i,1))){
                 $valideLettreMin = true;
+                $debug[substr($alphabetMin,$i,1)] = true;
                 break;
+            }else{
+                $debug[substr($alphabetMin,$i,1)] = false;
             }
         }
+
+//        dd($debug);
 
         for($i = 0; $i <=25;$i++){
             if(strpos($user->getMdp(),substr($alphabetMaj,$i,1))){
@@ -103,9 +110,8 @@ class UserController extends AbstractController
             $erreur = $serializer->serialize(["code"=>"400","message"=>"Email non valide"],'json');
             return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
-
         if(!$valideLettreMin or !$valideCaractere or !$valideChiffre or !$valideLettreMaj) {
-            $erreur = $serializer->serialize(["code"=>"400","message"=>"Complexité du mot de passe trop faible. 1 lettre minuscule, 1 lettre majuscule, 1 chiffre, et 1 caractère spéciale nécessaire au minimum"],'json');
+            $erreur = $serializer->serialize(["code"=>"400","message"=>"Complexité du mot de passe trop faible. 1 lettre minuscule, 1 lettre majuscule, 1 chiffre, et 1 caractère spéciale nécessaire au minimum | maj : $valideLettreMaj ; et min : $valideLettreMin"],'json');
             return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
 
