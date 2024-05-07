@@ -61,7 +61,7 @@ class UserController extends AbstractController
         $debug = [];
 
         for($i = 0; $i <=25;$i++){
-            if(strpos($user->getMdp(),substr($alphabetMin,$i,1))){
+            if(strpos($user->getPassword(),substr($alphabetMin,$i,1))){
                 $valideLettreMin = true;
                 $debug[substr($alphabetMin,$i,1)] = true;
                 break;
@@ -73,21 +73,21 @@ class UserController extends AbstractController
 //        dd($debug);
 
         for($i = 0; $i <=25;$i++){
-            if(strpos($user->getMdp(),substr($alphabetMaj,$i,1))){
+            if(strpos($user->getPassword(),substr($alphabetMaj,$i,1))){
                 $valideLettreMaj = true;
                 break;
             }
         }
 
         for($i = 0; $i <=9;$i++){
-            if(strpos($user->getMdp(),substr($chiffres,$i,1))){
+            if(strpos($user->getPassword(),substr($chiffres,$i,1))){
                 $valideChiffre = true;
                 break;
             }
         }
 
         for($i = 0; $i <=37;$i++){
-            if(strpos($user->getMdp(),substr($caracteres,$i,1))){
+            if(strpos($user->getPassword(),substr($caracteres,$i,1))){
                 $valideCaractere = true;
                 break;
             }
@@ -95,11 +95,11 @@ class UserController extends AbstractController
 
         // Hacher le mot de passe
 
-        $user->setMdp(password_hash($user->getMdp(),PASSWORD_DEFAULT));
+        $user->setPassword(password_hash($user->getPassword(),PASSWORD_DEFAULT));
 
         // Affecter le role Role_User
 
-        $user->setRoles(UserRoles::ROLE_USER);
+        $user->setRoles([UserRoles::ROLE_USER]);
 
         if($emailDejaUtilise){
             $erreur = $serializer->serialize(["code"=>"400","message"=>"Email déjà utilisé"],'json');

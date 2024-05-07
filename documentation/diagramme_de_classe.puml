@@ -34,9 +34,9 @@ class Réservation {
 - Montant
 }
 
-User "1..1 "-->"1..* " Réservation : " achète"
-Salle "1..1"-->"1..*  " Séance : " diffuse"
+User "1..1 "->"1..* " Réservation : " achète"
+Salle "1..1"->"1..*  " Séance : " diffuse"
 Réservation "0..* "<--"1..1" Séance : "est réservé"
-Séance "1..* "<--"1..1 " Film : " appartient"
+Séance "1..* "<-"1..1 " Film : " appartient"
 
 @enduml
