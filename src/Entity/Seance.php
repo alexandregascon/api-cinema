@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SeanceRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -36,6 +37,9 @@ class Seance
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['detail_films'])]
     private ?Salle $salle = null;
+
+    #[ORM\OneToMany(mappedBy: 'seance', targetEntity: Reservation::class)]
+    private Collection $reservations;
 
     public function __construct()
     {
@@ -113,4 +117,16 @@ class Seance
     {
         $this->film = $film;
     }
+
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function setReservations(Collection $reservations): void
+    {
+        $this->reservations = $reservations;
+    }
+
+
 }
