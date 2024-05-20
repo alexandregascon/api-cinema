@@ -111,7 +111,7 @@ class UserController extends AbstractController
             return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
         if(!$valideLettreMin or !$valideCaractere or !$valideChiffre or !$valideLettreMaj) {
-            $erreur = $serializer->serialize(["code"=>"400","message"=>"Complexité du mot de passe trop faible. 1 lettre minuscule, 1 lettre majuscule, 1 chiffre, et 1 caractère spéciale nécessaire au minimum | maj : $valideLettreMaj ; et min : $valideLettreMin"],'json');
+            $erreur = $serializer->serialize(["code"=>"400","message"=>"Complexité du mot de passe trop faible. 1 lettre minuscule, 1 lettre majuscule, 1 chiffre, et 1 caractère spéciale nécessaire au minimum"],'json');
             return new Response($erreur,Response::HTTP_BAD_REQUEST);
         }
 

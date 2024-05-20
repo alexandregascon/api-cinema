@@ -14,15 +14,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class SeanceController extends AbstractController
 {
-    #[Route('/reserver/{id}', name: 'app_reserver', requirements: ['id' => '\d+',"user_id"=>"\d+"], methods: ['POST'])]
-    public function reserver(SeanceRepository $seanceRepository, \Symfony\Component\HttpFoundation\Request $request, SerializerInterface $serializer, UserRepository $userRepository, SalleRepository $salleRepository, int $id, int $user_id, EntityManagerInterface $entityManager): Response
+    #[Route('/reserver/{id}', name: 'app_reserver', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function reserver(SeanceRepository $seanceRepository, \Symfony\Component\HttpFoundation\Request $request, SerializerInterface $serializer, UserRepository $userRepository, SalleRepository $salleRepository, int $id, EntityManagerInterface $entityManager): Response
     {
         $reservation = $request->getContent();
         $newReservation = new Reservation();
         $reservation = $serializer->deserialize($reservation, Reservation::class, 'json');
         $seance = $seanceRepository->find($id);
-        $user = $userRepository->find($user_id);
-        $salle = $seance->getSalle();
+        $user = $this->getUser();
+//        dd($user);
+//        $user = $request->headers->get("Authorization");
+//        $salle = $seance->getSalle();
         if (empty($seance)) {
             $reservationJson = json_encode(['Code' => "404", "Erreur" => "Ce film n'existe pas"]);
             return new Response($reservationJson, Response::HTTP_NOT_FOUND);
